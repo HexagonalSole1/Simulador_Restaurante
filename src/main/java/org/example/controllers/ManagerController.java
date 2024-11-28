@@ -60,6 +60,7 @@ public class ManagerController {
                     .comensal(comensal)
                     .comensalView(comensalView)
                     .build();
+            comensal.addObserver(comensalController);
 
             // Agregar el comensal al monitor de clientes
             clientesMonitor.agregarCliente(comensal);
