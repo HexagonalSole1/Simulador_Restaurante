@@ -4,6 +4,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.paint.Color;
 import org.example.monitores.MesaMonitor;
+import org.example.views.components.MesaComponent;
 
 public class MesaView {
     private Entity[] mesasEntities;
@@ -13,8 +14,8 @@ public class MesaView {
         mesasEntities = new Entity[numeroMesas];
 
         // Definir separación entre mesas
-        double separacionX = 300; // Distancia horizontal entre mesas
-        double separacionY = 250; // Distancia vertical entre mesas
+        double separacionX = 200; // Distancia horizontal entre mesas
+        double separacionY = 150; // Distancia vertical entre mesas
         int columnas = 3; // Número de mesas por fila
 
         for (int i = 0; i < numeroMesas; i++) {
@@ -27,17 +28,25 @@ public class MesaView {
     }
 
     private void crearView(int numeroMesa, double x, double y) {
+        // Crear la entidad visual para la mesa
         Entity mesaEntity = FXGL.entityBuilder()
-                .at(x, y)
-                .viewWithBBox("mesa.png")
+                .at(x, y) // Posición inicial de la mesa
+                .viewWithBBox("mesa.png") // Imagen de la mesa
+                .scale(0.5,0.5)
+                .with(new MesaComponent(numeroMesa)) // Agregar componente para manejar estados
                 .buildAndAttach();
 
+        // Crear el texto que identifica a la mesa
         var textoMesa = FXGL.getUIFactoryService().newText("Mesa " + numeroMesa, Color.WHITE, 16);
-        textoMesa.setTranslateX(x + 10);
-        textoMesa.setTranslateY(y - 10);
+        textoMesa.setTranslateX(x + 100); // Ajustar posición para centrar en la mesa
+        textoMesa.setTranslateY(y + 100); // Centrar verticalmente sobre la mesa
         FXGL.getGameScene().addUINode(textoMesa);
 
+        // Guardar la entidad de la mesa (opcional, si necesitas referencia)
         mesasEntities[numeroMesa - 1] = mesaEntity;
+
+        // Mensaje de depuración
+        System.out.println("Mesa " + numeroMesa + " creada en posición (" + x + ", " + y + ")");
     }
 
     public Entity[] getMesasEntities() {
