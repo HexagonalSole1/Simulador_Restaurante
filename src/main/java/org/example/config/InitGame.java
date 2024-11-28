@@ -1,11 +1,6 @@
 package org.example.config;
 
-import com.almasb.fxgl.dsl.FXGL;
-import com.almasb.fxgl.entity.Entity;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
+
 import org.example.controllers.ManagerController;
 import org.example.views.RestaurantView;
 import org.example.views.entities.EntityManager;

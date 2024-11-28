@@ -11,5 +11,4 @@ public class Mesa {
     private int numeroMesa;
     private Boolean Disponibilidad;
     private Boolean isClean;
-//
 }
