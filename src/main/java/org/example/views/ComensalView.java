@@ -20,9 +20,14 @@ public class ComensalView {
     }
 
     public void moverAMesa(double mesaX, double mesaY) {
-        // Mover al comensal a la mesa
-        comensal.translate(mesaX, mesaY); // Suponiendo que translate cambia su posición
+        ComensalComponent component = comensal.getComponent(ComensalComponent.class);
+        if (component != null) {
+            component.moverAHaciaMesa(mesaX, mesaY); // Iniciar el movimiento
+        } else {
+            System.err.println("No se encontró el componente ComensalComponent para el comensal.");
+        }
     }
+
 
     public void salir() {
         // Hacer que el comensal salga del restaurante
