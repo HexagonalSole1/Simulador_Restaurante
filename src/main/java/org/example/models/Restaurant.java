@@ -1,6 +1,7 @@
 package org.example.models;
 
 
+import org.example.config.Constants;
 import org.example.models.actors.Mesero;
 import org.example.models.actors.Recepcionista;
 import org.example.models.restaurant.Cocina;
@@ -14,7 +15,7 @@ import java.util.List;
 public class Restaurant {
 
 
-    public static final MesaMonitor mesaMonitor = new MesaMonitor(5); // 5 mesas disponibles
+    public static final MesaMonitor mesaMonitor = new MesaMonitor(Constants.NUMERO_MESAS); // 5 mesas disponibles
     private static final ComidasMonitor comidasMonitor = new ComidasMonitor();
     private static final ClientesMonitor clientesMonitor = new ClientesMonitor();
 

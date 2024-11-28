@@ -1,13 +1,19 @@
 package org.example.monitores;
 
-import java.util.Arrays;
+import org.example.models.restaurant.Mesa;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MesaMonitor {
-    private final boolean[] mesas; // Array para indicar el estado de las mesas (true = ocupada, false = libre)
+    private final List<Mesa> mesas; // Lista para manejar las mesas como objetos
 
     public MesaMonitor(int numMesas) {
-        this.mesas = new boolean[numMesas]; // Inicializa todas las mesas como libres
-        Arrays.fill(mesas, false); // Todas las mesas están libres al inicio
+        this.mesas = new ArrayList<>();
+        for (int i = 1; i <= numMesas; i++) {
+            // Inicializa las mesas como libres, limpias y con posiciones por defecto
+            mesas.add(new Mesa(i, true, true, 0.0, 0.0));
+        }
     }
 
     // Método sincronizado para ocupar una mesa
@@ -16,12 +22,12 @@ public class MesaMonitor {
             wait();
         }
 
-        for (int i = 0; i < mesas.length; i++) {
-            if (!mesas[i]) { // Encuentra la primera mesa libre
-                mesas[i] = true; // Ocupa la mesa
-                System.out.println("Mesa " + (i + 1) + " no esta ocupada.");
+        for (Mesa mesa : mesas) {
+            if (mesa.getDisponibilidad()) { // Encuentra la primera mesa libre
+                mesa.setDisponibilidad(false); // Ocupa la mesa
+                System.out.println("Mesa " + mesa.getNumeroMesa() + " ocupada.");
                 notifyAll(); // Notifica a otros hilos que el estado de las mesas ha cambiado
-                return i; // Devuelve el ID de la mesa ocupada
+                return mesa.getNumeroMesa(); // Devuelve el número de la mesa ocupada
             }
         }
 
@@ -29,28 +35,42 @@ public class MesaMonitor {
     }
 
     // Método sincronizado para liberar una mesa
-    public synchronized void liberarMesa(int idMesa) {
-        if (idMesa >= 0 && idMesa < mesas.length) {
-            mesas[idMesa] = false; // Libera la mesa
-            System.out.println("Mesa " + idMesa + " liberada.");
-            notifyAll(); // Notifica a otros hilos que el estado de las mesas ha cambiado
-        } else {
-            System.out.println("ID de mesa inválido: " + idMesa);
+    public synchronized void liberarMesa(int numeroMesa) {
+        for (Mesa mesa : mesas) {
+            if (mesa.getNumeroMesa() == numeroMesa) {
+                mesa.setDisponibilidad(true); // Libera la mesa
+                System.out.println("Mesa " + numeroMesa + " liberada.");
+                notifyAll(); // Notifica a otros hilos que el estado de las mesas ha cambiado
+                return;
+            }
         }
+
+        System.out.println("ID de mesa inválido: " + numeroMesa);
     }
 
-    // Método privado para verificar si hay mesas disponibles
+    // Método sincronizado para buscar una mesa por su ID
+    public synchronized Mesa buscarMesaPorId(int idMesa) {
+        for (Mesa mesa : mesas) {
+            if (mesa.getNumeroMesa() == idMesa) {
+                return mesa; // Retorna la mesa si se encuentra
+            }
+        }
+        System.out.println("Mesa con ID " + idMesa + " no encontrada.");
+        return null; // Retorna null si no se encuentra la mesa
+    }
+
+    // Método para verificar si hay mesas disponibles
     private boolean hayMesasDisponibles() {
-        for (boolean mesa : mesas) {
-            if (!mesa) {
+        for (Mesa mesa : mesas) {
+            if (mesa.getDisponibilidad()) {
                 return true; // Hay al menos una mesa libre
             }
         }
         return false; // No hay mesas libres
     }
 
-    // Método para obtener el número de mesas
+    // Método para obtener el número total de mesas
     public int getNumeroMesas() {
-        return mesas.length;
+        return mesas.size();
     }
 }

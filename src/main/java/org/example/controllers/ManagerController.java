@@ -15,7 +15,7 @@ public class ManagerController {
     public static void initController() {
         // Monitores
         ClientesMonitor clientesMonitor = new ClientesMonitor();
-        MesaMonitor mesaMonitor = new MesaMonitor(Constants.NUMERO_MESAS); // 10 mesas disponibles
+        MesaMonitor mesaMonitor = new MesaMonitor(Constants.NUMERO_MESAS); // Número de mesas definido en Constants
         ComidasMonitor comidasMonitor = new ComidasMonitor();
 
         // Modelos
@@ -36,15 +36,26 @@ public class ManagerController {
                 Constants.POSITION_INITIAL_MESERO_Y
         );
 
-        // Crear vista de la mesa con los valores iniciales
+        // Crear vista de la mesa con los valores iniciales y asociarlas al monitor
         MesaView mesaView = new MesaView(mesaMonitor,
                 Constants.POSITION_INITIAL_MESAS_X,
                 Constants.POSITION_INITIAL_MESAS_Y
         );
 
-        //controllers
-        RecepcionistaController recepcionistaController = new RecepcionistaController(recepcionista,recepcionistaView,mesaMonitor,clientesMonitor);
+        // Sincronizar las mesas lógicas con el monitor
+        for (Mesa mesa : mesaView.getMesas()) {
+            mesaMonitor.liberarMesa(mesa.getNumeroMesa());
+        }
+
+        // Controladores
+        RecepcionistaController recepcionistaController = new RecepcionistaController(
+                recepcionista,
+                recepcionistaView,
+                mesaMonitor,
+                clientesMonitor
+        );
         recepcionistaController.startAssigningGuests();
+
         // Crear e inicializar 10 comensales
         for (int i = 1; i <= 10; i++) {
             // Crear el modelo del comensal
@@ -69,5 +80,4 @@ public class ManagerController {
             System.out.println("Creado: " + comensal.getNombre() + " en posición (" + posX + ", " + posY + ")");
         }
     }
-
 }

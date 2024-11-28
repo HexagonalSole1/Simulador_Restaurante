@@ -6,8 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.Patterns.ComensalObserver;
 import org.example.models.actors.Comensal;
+import org.example.models.restaurant.Mesa;
 import org.example.utils.LoggerDepuracionFXGL;
 import org.example.views.ComensalView;
+
+import static org.example.models.Restaurant.mesaMonitor;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,9 +41,22 @@ public class ComensalController implements ComensalObserver {
     }
 
     @Override
-    public void onMesaAsignada(Comensal comensal, int mesa) {
-        LoggerDepuracionFXGL.log("Controller: El comensal " + comensal.getNombre() + " fue asignado a la mesa " + mesa);
-        comensalView.moverAMesa(500,600);
-        // Aquí puedes realizar cualquier acción adicional
+    public void onMesaAsignada(Comensal comensal, int mesaId) {
+        LoggerDepuracionFXGL.log("Controller: El comensal " + comensal.getNombre() + " fue asignado a la mesa " + mesaId);
+
+        // Obtener la posición de la mesa asignada
+        Mesa mesa = mesaMonitor.buscarMesaPorId(mesaId);
+        if (mesa != null) {
+            double posX = mesa.getPosX();
+            double posY = mesa.getPosY();
+
+            // Mover la vista del comensal a la posición de la mesa
+            comensalView.moverAMesa(posX, posY);
+
+            LoggerDepuracionFXGL.log("Comensal " + comensal.getNombre() + " movido a posición de la mesa (" + posX + ", " + posY + ")");
+        } else {
+            LoggerDepuracionFXGL.log("Error: Mesa con ID " + mesaId + " no encontrada.");
+        }
     }
+
 }
