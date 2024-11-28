@@ -1,7 +1,6 @@
 package org.example.models;
 
-import org.example.config.Constants;
-import org.example.models.actors.Comensal;
+
 import org.example.models.actors.Mesero;
 import org.example.models.actors.Recepcionista;
 import org.example.models.restaurant.Cocina;
