@@ -1,0 +1,76 @@
+[33mcommit a4f551937a27aebbd00c26bfbc04568f3a35555f[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Thu Nov 28 03:42:56 2024 -0600
+
+    1 paso mas hacia la durmision
+
+[33mcommit debe8c474af4e9be4f9089105d38111b6a21c351[m
+Merge: a058374 68bbb7a
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Thu Nov 28 02:44:46 2024 -0600
+
+    Merge branch 'main' of https://github.com/HexagonalSole1/Simulador_Restaurante
+
+[33mcommit a0583741b8dd88610cdb0257d986b7776edd572a[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Thu Nov 28 02:42:26 2024 -0600
+
+    si se pudo la dormida
+
+[33mcommit 68bbb7a3d5583e7145d082d8defef0acad15eff8[m[33m ([m[1;31morigin/main[m[33m)[m
+Merge: fceb98a 1da39a1
+Author: Th3Danny <134882672+Th3Danny@users.noreply.github.com>
+Date:   Thu Nov 28 02:38:06 2024 -0600
+
+    Merge pull request #2 from HexagonalSole1/views
+    
+    Creacion  de vista mesero y chef
+
+[33mcommit 1da39a17241c3cf96fd17991fe89d56c902a9f09[m
+Author: Danny <223181@ids.upchiapas.edu.mx>
+Date:   Thu Nov 28 02:36:24 2024 -0600
+
+    Creacio  de vista mesero y chef
+
+[33mcommit fceb98a0ff92c03fc7f0ee2d2993f78b301dd1aa[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Thu Nov 28 00:45:58 2024 -0600
+
+    avanze
+
+[33mcommit 4c2ad231acf853593d4666f9d7aaa6de6cf0c803[m
+Merge: f6b6eaa 1aeede3
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Thu Nov 28 00:45:23 2024 -0600
+
+    Merge branch 'views' of https://github.com/HexagonalSole1/Simulador_Restaurante
+
+[33mcommit f6b6eaac0667cf4c0b7028ac3545d9bbe62f5481[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Thu Nov 28 00:35:29 2024 -0600
+
+    avanze
+
+[33mcommit 1aeede337b610cd9c90d99549069622f87a1a80e[m[33m ([m[1;31morigin/views[m[33m)[m
+Author: Danny <223181@ids.upchiapas.edu.mx>
+Date:   Wed Nov 27 22:40:55 2024 -0600
+
+    Acomodo de vista principal
+
+[33mcommit 169ed26a88847370396111532cad3aec5c43eef8[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Wed Nov 27 21:21:20 2024 -0600
+
+    first commit
+
+[33mcommit ce735bd419dad43c65afcda9e10995e962bf422e[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Wed Nov 27 21:10:27 2024 -0600
+
+    change
+
+[33mcommit 8cc4ceb68273bbb9db2cdcbd29833b2c80e612c6[m
+Author: HexagonalSole1 <deskrun@gmail.com>
+Date:   Wed Nov 27 21:02:48 2024 -0600
+
+    sin musiquita
