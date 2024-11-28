@@ -43,6 +43,4 @@ public class Comensal extends Persona implements Runnable {
             System.out.println("Comensal " + nombre + " fue interrumpido.");
         }
     }
-
-
 }

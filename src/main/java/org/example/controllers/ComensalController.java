@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.example.models.actors.Comensal;
 import org.example.views.ComensalView;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
