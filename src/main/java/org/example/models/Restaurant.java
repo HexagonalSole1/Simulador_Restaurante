@@ -5,6 +5,7 @@ import org.example.models.actors.Comensal;
 import org.example.models.actors.Mesero;
 import org.example.models.actors.Recepcionista;
 import org.example.models.restaurant.Cocina;
+import org.example.monitores.ClientesMonitor;
 import org.example.monitores.ComidasMonitor;
 import org.example.monitores.MesaMonitor;
 
@@ -16,7 +17,10 @@ public class Restaurant {
 
     private static final MesaMonitor mesaMonitor = new MesaMonitor(5); // 5 mesas disponibles
     private static final ComidasMonitor comidasMonitor = new ComidasMonitor();
-    public static final Recepcionista recepcionista = new Recepcionista("Laura", 1, mesaMonitor);
+    private static final ClientesMonitor clientesMonitor = new ClientesMonitor();
+
+
+    public static final Recepcionista recepcionista = new Recepcionista("Laura", 1, mesaMonitor,clientesMonitor);
 
     public static final List<Mesero> meseros = new ArrayList<>();
 

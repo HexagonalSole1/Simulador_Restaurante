@@ -6,7 +6,7 @@ public class GameConfig {
     public static void applySettings(GameSettings settings) {
         settings.setWidth(Constants.WINDOW_WIDTH);
         settings.setHeight(Constants.WINDOW_HEIGTH);
-        settings.setTitle("Simulador de Restaurante"); // Título de la ventana
+        settings.setTitle("Simulador de Restaurante");
         settings.setVersion("1.0");
     }
 }
