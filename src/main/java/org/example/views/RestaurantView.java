@@ -2,9 +2,6 @@ package org.example.views;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import org.example.views.components.RecepcionistaComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +12,12 @@ public class RestaurantView {
     private List<MeseroView> meseros;  // Lista de meseros
     private RecepcionistaView recepcionistaView;  // Vista del recepcionista
 
-    public RestaurantView() {
+    // Constructor que recibe el RecepcionistaView ya inicializado
+    public RestaurantView(RecepcionistaView recepcionistaView) {
         this.comensales = new ArrayList<>();
         this.meseros = new ArrayList<>();
-        this.recepcionistaView = new RecepcionistaView(100, 200);
+        this.recepcionistaView = recepcionistaView;
+
         // Añadir el recepcionista al mundo
         FXGL.getGameWorld().addEntity(recepcionistaView.getEntity());
     }
@@ -47,8 +46,6 @@ public class RestaurantView {
             System.out.println("No hay mesero para atender.");
         }
     }
-
-
 
     public void agregarMesero(MeseroView mesero) {
         meseros.add(mesero);

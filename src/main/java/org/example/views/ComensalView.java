@@ -1,6 +1,7 @@
 package org.example.views;
 
 import com.almasb.fxgl.entity.Entity;
+import org.example.views.components.ComensalComponent;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 

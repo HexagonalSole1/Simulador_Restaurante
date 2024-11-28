@@ -4,6 +4,8 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
 import org.example.views.components.RecepcionistaComponent;
 
+import static org.example.models.Restaurant.mesaMonitor;
+
 public class RecepcionistaView {
 
     private Entity recepcionista;
@@ -13,8 +15,9 @@ public class RecepcionistaView {
         this.recepcionista = FXGL.entityBuilder()
                 .at(startX, startY) // Ubicación inicial del recepcionista
                 .view("recepcionista.png") // Asignar imagen del recepcionista
-                .with(new RecepcionistaComponent()) // Añadir el componente de lógica
-                .buildAndAttach();
+                .scale(0.5, 0.5) // Escalar la imagen del recepcionista
+                .with(new RecepcionistaComponent(mesaMonitor)) // Añadir el componente de lógica
+                .buildAndAttach(); // Adjuntar la entidad a la escena
     }
 
     // Método para verificar disponibilidad de mesas
@@ -28,8 +31,8 @@ public class RecepcionistaView {
     }
 
     // Método para liberar una mesa cuando el comensal se va
-    public void liberarMesa() {
-        recepcionista.getComponent(RecepcionistaComponent.class).liberarMesa();
+    public void liberarMesa(int idMesa) {
+        recepcionista.getComponent(RecepcionistaComponent.class).liberarMesa(idMesa);
     }
 
     public Entity getEntity() {
