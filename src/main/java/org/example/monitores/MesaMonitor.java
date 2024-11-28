@@ -56,7 +56,7 @@ public class MesaMonitor {
     }
 
     // Método para obtener el número de mesas
-    public int getNumeroMesas() {
+    public int getNumeroMesas(int mesaAsignada) {
         return mesas.size();
     }
 }

@@ -24,15 +24,17 @@ public class MeseroComponent extends Component {
     }
     // Método para atender a un comensal
     public void atenderComensal(double x, double y) {
-        destino = new Point2D(x, y); // Establecer el destino
-        ocupado = true; // Indicar que el mesero está atendiendo
+        destino = new Point2D(x, y);
+        ocupado = true; // El mesero está ocupado
     }
 
-    // Método para regresar a su posición inicial
     public void regresarAPosicionInicial(double x, double y) {
-        destino = new Point2D(x, y); // Establecer el destino
-        ocupado = false; // Indicar que está regresando y disponible
+        destino = new Point2D(x, y);
+        ocupado = false; // El mesero está libre
     }
+
+
+
 
     @Override
     public void onUpdate(double tpf) {

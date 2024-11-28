@@ -2,6 +2,7 @@ package org.example.controllers;
 
 import org.example.config.Constants;
 import org.example.models.actors.Mesero;
+import org.example.models.restaurant.Mesa;
 import org.example.views.MeseroView;
 
 public class MeseroController {
@@ -16,19 +17,22 @@ public class MeseroController {
     }
 
     // Método para levantar un pedido en la mesa asignada
-    public void levantarPedido() {
+
+    // Modifica este método para que acepte un argumento de tipo Mesa
+    public void levantarPedido(Mesa mesa) {
         new Thread(() -> {
             try {
-                // Mueve al mesero a la mesa asignada
-                System.out.println("Mesero " + mesero.getNombre() + " se mueve hacia la mesa " + mesero.getMesaAsignada());
-
+                // Mueve al mesero hacia la mesa
+                double mesaX = mesa.getPosX();
+                double mesaY = mesa.getPosY();
+                meseroView.atenderComensal(mesaX, mesaY); // Mueve la vista del mesero
 
                 // Simula el tiempo para tomar el pedido
-                Thread.sleep(3000);
+                Thread.sleep(3000); // El mesero tarda 3 segundos en tomar el pedido
 
                 // Levanta el pedido usando el modelo del mesero
                 mesero.atenderPedido();
-                System.out.println("Mesero " + mesero.getNombre() + " ha levantado el pedido en la mesa " + mesero.getMesaAsignada());
+                System.out.println("Mesero " + mesero.getNombre() + " ha levantado el pedido en la mesa " + mesa.getNumeroMesa());
             } catch (InterruptedException e) {
                 System.err.println("Error mientras el mesero levantaba el pedido: " + e.getMessage());
                 Thread.currentThread().interrupt();
@@ -36,13 +40,15 @@ public class MeseroController {
         }).start();
     }
 
+
     // Método para limpiar la mesa asignada
     public void limpiarMesa() {
         new Thread(() -> {
             try {
                 // Mueve al mesero a la mesa asignada
-                System.out.println("Mesero " + mesero.getNombre() + " se mueve hacia la mesa " + mesero.getMesaAsignada());
-                meseroView.atenderComensal(500,600);
+                double mesaX = mesero.getMesaAsignada();
+                double mesaY = mesero.getMesaAsignada();
+                meseroView.atenderComensal(mesaX, mesaY); // Mueve la vista del mesero
 
                 // Simula el tiempo para limpiar la mesa
                 Thread.sleep(2000);
@@ -50,10 +56,14 @@ public class MeseroController {
                 // Limpia la mesa usando el modelo del mesero
                 mesero.limpiarMesa();
                 System.out.println("Mesero " + mesero.getNombre() + " ha limpiado la mesa " + mesero.getMesaAsignada());
+
+                // Regresa el mesero a su posición inicial
+                meseroView.regresarAPosicion(0, 0); // Usa la posición que desees para el regreso
             } catch (InterruptedException e) {
                 System.err.println("Error mientras el mesero limpiaba la mesa: " + e.getMessage());
                 Thread.currentThread().interrupt();
             }
         }).start();
     }
+
 }

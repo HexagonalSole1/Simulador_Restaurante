@@ -16,12 +16,14 @@ import java.util.List;
 
 public class ManagerController {
     private static MesaView mesaView; // Variable estática para compartir
+
     public static void initController() {
 
         List<Mesa> mesas = new ArrayList<>();
         for (int i = 0; i < Constants.NUMERO_MESAS; i++) { // 5 mesas de ejemplo
             mesas.add(new Mesa(i, true, true, Math.random() * 100, Math.random() * 100));
         }
+
         // Monitores
         ClientesMonitor clientesMonitor = new ClientesMonitor();
         MesaMonitor mesaMonitor = new MesaMonitor(mesas); // Número de mesas definido en Constants
@@ -50,12 +52,13 @@ public class ManagerController {
         MesaView mesaView = new MesaView(mesaMonitor, Constants.POSITION_INITIAL_MESAS_X, Constants.POSITION_INITIAL_MESAS_Y);
         ManagerController.setMesaView(mesaView);
 
-
         // Sincronizar las mesas lógicas con el monitor
         for (Mesa mesa : mesas) { // Iterar sobre la lista de mesas creada anteriormente
             mesaMonitor.liberarMesa(mesa.getNumeroMesa());
         }
 
+        // Crear el controlador para el mesero
+        MeseroController meseroController = new MeseroController(mesero, meseroView);
 
         // Controladores
         RecepcionistaController recepcionistaController = new RecepcionistaController(
@@ -86,6 +89,13 @@ public class ManagerController {
             // Agregar el comensal al monitor de clientes
             clientesMonitor.agregarCliente(comensal);
 
+            // Verificar si el comensal tiene mesa asignada y notificar al mesero
+            if (comensal.getMesaAsignada() != -1) {  // o cualquier valor que consideres como "no asignado"
+                int mesa = mesaMonitor.getNumeroMesas(comensal.getMesaAsignada());
+                // Notificar al mesero para que se mueva a la mesa y tome el pedido
+                meseroController.levantarPedido(mesa);
+            }
+
             // (Opcional) Imprimir la creación
             System.out.println("Creado: " + comensal.getNombre() + " en posición (" + posX + ", " + posY + ")");
         }
@@ -98,5 +108,4 @@ public class ManagerController {
     public static MesaView getMesaView() {
         return mesaView;
     }
-
 }
