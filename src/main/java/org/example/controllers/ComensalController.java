@@ -8,6 +8,8 @@ import org.example.Patterns.ComensalObserver;
 import org.example.models.actors.Comensal;
 import org.example.utils.LoggerDepuracionFXGL;
 import org.example.views.ComensalView;
+import org.example.views.MesaView;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class ComensalController implements ComensalObserver {
 
     private Comensal comensal;
     private ComensalView comensalView;
-
+    private MesaView mesaView; // Agregar referencia a MesaView
     public void iniciarAccion() {
         comensal.addObserver(this); // Registrar el controlador como observer
         new Thread(comensal).start();
@@ -38,8 +40,12 @@ public class ComensalController implements ComensalObserver {
 
     @Override
     public void onMesaAsignada(Comensal comensal, int mesa) {
-        LoggerDepuracionFXGL.log("Controller: El comensal " + comensal.getNombre() + " fue asignado a la mesa " + mesa);
-        comensalView.moverAMesa(500,600);
-        // Aquí puedes realizar cualquier acción adicional
+        var mesaEntity = ManagerController.getMesaView().getMesasEntities()[mesa - 1];
+        double mesaX = mesaEntity.getX();
+        double mesaY = mesaEntity.getY();
+
+        comensalView.moverAMesa(mesaX, mesaY);
     }
+
+
 }
