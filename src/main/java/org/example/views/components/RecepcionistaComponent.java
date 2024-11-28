@@ -1,30 +1,33 @@
 package org.example.views.components;
 
 import com.almasb.fxgl.entity.component.Component;
+import org.example.monitores.MesaMonitor;
 
 public class RecepcionistaComponent extends Component {
+    private final MesaMonitor mesaMonitor; // Monitor para verificar mesas
 
-    private boolean hayMesasDisponibles;
-
-    public RecepcionistaComponent() {
-        // Asumimos que al principio hay mesas disponibles
-        this.hayMesasDisponibles = true;
+    public RecepcionistaComponent(MesaMonitor mesaMonitor) {
+        this.mesaMonitor = mesaMonitor;
     }
+
+
+
+    // Verifica si hay mesas disponibles
     public boolean verificarDisponibilidadMesas() {
-        return hayMesasDisponibles;
+        return mesaMonitor.getNumeroMesas() > 0;
     }
 
-    public void asignarMesa() {
-        if (hayMesasDisponibles) {
-            // Aquí podrías cambiar la lógica según el número de mesas disponibles
-            hayMesasDisponibles = false;
-        } else {
-            // Si no hay mesas disponibles, los comensales deben esperar
-            System.out.println("Esperando disponibilidad de mesas...");
+    public int asignarMesa() {
+        try {
+            return mesaMonitor.ocuparMesa(); // Ocupar una mesa
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return -1; // Indica que no se pudo asignar
         }
     }
 
-    public void liberarMesa() {
-        hayMesasDisponibles = true;
+    // Liberar una mesa (opcional)
+    public void liberarMesa(int idMesa) {
+        mesaMonitor.liberarMesa(idMesa);
     }
 }

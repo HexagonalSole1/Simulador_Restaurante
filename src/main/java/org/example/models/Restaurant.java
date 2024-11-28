@@ -15,7 +15,7 @@ import java.util.List;
 public class Restaurant {
 
 
-    private static final MesaMonitor mesaMonitor = new MesaMonitor(5); // 5 mesas disponibles
+    public static final MesaMonitor mesaMonitor = new MesaMonitor(5); // 5 mesas disponibles
     private static final ComidasMonitor comidasMonitor = new ComidasMonitor();
     private static final ClientesMonitor clientesMonitor = new ClientesMonitor();
 
