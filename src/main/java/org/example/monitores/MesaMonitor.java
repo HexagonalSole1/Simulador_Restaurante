@@ -48,4 +48,9 @@ public class MesaMonitor {
         }
         return false; // No hay mesas libres
     }
+
+    // Método para obtener el número de mesas
+    public int getNumeroMesas() {
+        return mesas.length;
+    }
 }

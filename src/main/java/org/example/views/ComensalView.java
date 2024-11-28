@@ -13,6 +13,8 @@ public class ComensalView {
         this.comensal = entityBuilder()
                 .at(startX, startY) // Posición inicial
                 .view("cliente.png") // Imagen
+                .scale(0.5,0.5)
+                .with(new ComensalComponent()) // Agrega el componente
                 .buildAndAttach();
     }
 
