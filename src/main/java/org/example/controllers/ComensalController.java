@@ -11,6 +11,7 @@ import org.example.views.ComensalView;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ComensalController {
 
     private Comensal comensal;
