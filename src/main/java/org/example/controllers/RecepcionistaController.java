@@ -33,8 +33,13 @@ public class RecepcionistaController {
 
                     // Simular la asignación de una mesa al cliente
                     int idMesaOcupar = mesaMonitor.ocuparMesa();
-                    System.out.println("Recepcionista asignando cliente " + cliente.getNombre() + " a la mesa " + (idMesaOcupar+1));
-                    cliente.setMesaAsignada(idMesaOcupar);
+                    if (idMesaOcupar != -1) {
+                        System.out.println("Recepcionista asignando cliente " + cliente.getNombre() + " a la mesa " + (idMesaOcupar + 1));
+                        cliente.setMesaAsignada(idMesaOcupar + 1); // Base-1
+                    } else {
+                        System.out.println("No hay mesas disponibles para el cliente: " + cliente.getNombre());
+                    }
+
 
                     Thread.sleep(3000); // Simulación de tiempo para asignar la mesa
                 } catch (InterruptedException e) {

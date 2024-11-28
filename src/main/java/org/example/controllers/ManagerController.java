@@ -12,6 +12,7 @@ import org.example.views.*;
 import org.example.views.components.RecepcionistaComponent;
 
 public class ManagerController {
+    private static MesaView mesaView; // Variable estática para compartir
     public static void initController() {
         // Monitores
         ClientesMonitor clientesMonitor = new ClientesMonitor();
@@ -36,11 +37,10 @@ public class ManagerController {
                 Constants.POSITION_INITIAL_MESERO_Y
         );
 
-        // Crear vista de la mesa con los valores iniciales y asociarlas al monitor
-        MesaView mesaView = new MesaView(mesaMonitor,
-                Constants.POSITION_INITIAL_MESAS_X,
-                Constants.POSITION_INITIAL_MESAS_Y
-        );
+        // Crear vista de la mesa con los valores iniciales
+        MesaView mesaView = new MesaView(mesaMonitor, Constants.POSITION_INITIAL_MESAS_X, Constants.POSITION_INITIAL_MESAS_Y);
+        ManagerController.setMesaView(mesaView);
+
 
         // Sincronizar las mesas lógicas con el monitor
         for (Mesa mesa : mesaView.getMesas()) {
@@ -62,8 +62,8 @@ public class ManagerController {
             Comensal comensal = new Comensal("Comensal" + i, i);
 
             // Crear la vista para el comensal
-            int posX = Constants.POSITION_INITIAL_COMENSAL_X + (i * 50); // Ajuste para distribuirlos horizontalmente
-            int posY = Constants.POSITION_INITIAL_COMENSAL_Y;
+            int posX = Constants.POSITION_INITIAL_COMENSAL_X + (i % 5) * 0; // Ajuste para distribuirlos horizontalmente
+            int posY = Constants.POSITION_INITIAL_COMENSAL_Y + (i % 5) * 100;
             ComensalView comensalView = new ComensalView(posX, posY);
 
             // Asociar modelo y vista mediante el controlador
@@ -80,4 +80,13 @@ public class ManagerController {
             System.out.println("Creado: " + comensal.getNombre() + " en posición (" + posX + ", " + posY + ")");
         }
     }
+
+    public static void setMesaView(MesaView mesaView) {
+        ManagerController.mesaView = mesaView;
+    }
+
+    public static MesaView getMesaView() {
+        return mesaView;
+    }
+
 }
