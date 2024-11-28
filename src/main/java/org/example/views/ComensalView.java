@@ -28,10 +28,10 @@ public class ComensalView {
         }
     }
 
-
     public void salir() {
         // Hacer que el comensal salga del restaurante
         comensal.removeFromWorld();
+
     }
 
     public double[] obtenerPosicion() {

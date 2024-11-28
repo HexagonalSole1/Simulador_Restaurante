@@ -46,7 +46,7 @@ public class ManagerController {
         RecepcionistaController recepcionistaController = new RecepcionistaController(recepcionista,recepcionistaView,mesaMonitor,clientesMonitor);
         recepcionistaController.startAssigningGuests();
         // Crear e inicializar 10 comensales
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= Constants.NUMERO_MESAS; i++) {
             // Crear el modelo del comensal
             Comensal comensal = new Comensal("Comensal" + i, i);
 

@@ -31,13 +31,14 @@ public class MesaMonitor {
     // Método sincronizado para liberar una mesa
     public synchronized void liberarMesa(int idMesa) {
         if (idMesa >= 0 && idMesa < mesas.length) {
-            mesas[idMesa] = false; // Libera la mesa
-            System.out.println("Mesa " + idMesa + " liberada.");
-            notifyAll(); // Notifica a otros hilos que el estado de las mesas ha cambiado
+            mesas[idMesa] = false; // Marca la mesa como libre
+            System.out.println("Mesa " + (idMesa + 1) + " ha sido liberada.");
+            notifyAll(); // Notifica que hay una mesa disponible
         } else {
-            System.out.println("ID de mesa inválido: " + idMesa);
+            System.err.println("Intento de liberar una mesa inválida: " + idMesa);
         }
     }
+
 
     // Método privado para verificar si hay mesas disponibles
     private boolean hayMesasDisponibles() {
