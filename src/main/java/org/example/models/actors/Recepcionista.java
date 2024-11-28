@@ -37,7 +37,7 @@ public class Recepcionista extends Persona {
     private void atenderComensal(Comensal comensal) throws InterruptedException {
         realizarAccion();
 
-        int idMesa = mesaMonitor.ocuparMesa(); // Asigna una mesa al comensal
+        int idMesa = mesaMonitor.ocuparMesa().getNumeroMesa(); // Asigna una mesa al comensal
         comensal.setMesaAsignada(idMesa);
         LoggerDepuracionFXGL.log("Recepcionista " + getNombre() + ": Mesa " + idMesa + " asignada al comensal " + comensal.getNombre());
 

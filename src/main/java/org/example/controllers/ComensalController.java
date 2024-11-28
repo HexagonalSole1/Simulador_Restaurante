@@ -18,7 +18,9 @@ public class ComensalController implements ComensalObserver {
 
     private Comensal comensal;
     private ComensalView comensalView;
-    private MesaView mesaView; // Agregar referencia a MesaView
+    private MesaView mesaView;
+
+
     public void iniciarAccion() {
         comensal.addObserver(this); // Registrar el controlador como observer
         new Thread(comensal).start();
@@ -40,6 +42,7 @@ public class ComensalController implements ComensalObserver {
 
     @Override
     public void onMesaAsignada(Comensal comensal, int mesa) {
+        mesaView= ManagerController.getMesaView();
         var mesaEntity = ManagerController.getMesaView().getMesasEntities()[mesa - 1];
         double mesaX = mesaEntity.getX();
         double mesaY = mesaEntity.getY();
