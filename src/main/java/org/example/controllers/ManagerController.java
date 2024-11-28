@@ -11,22 +11,31 @@ import org.example.monitores.MesaMonitor;
 import org.example.views.*;
 import org.example.views.components.RecepcionistaComponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ManagerController {
     private static MesaView mesaView; // Variable estática para compartir
     public static void initController() {
+
+        List<Mesa> mesas = new ArrayList<>();
+        for (int i = 0; i < Constants.NUMERO_MESAS; i++) { // 5 mesas de ejemplo
+            mesas.add(new Mesa(i, true, true, Math.random() * 100, Math.random() * 100));
+        }
         // Monitores
         ClientesMonitor clientesMonitor = new ClientesMonitor();
-        MesaMonitor mesaMonitor = new MesaMonitor(Constants.NUMERO_MESAS); // 10 mesas disponibles
+        MesaMonitor mesaMonitor = new MesaMonitor(mesas); // Número de mesas definido en Constants
         ComidasMonitor comidasMonitor = new ComidasMonitor();
 
         // Modelos
         Recepcionista recepcionista = new Recepcionista("Laura", 1, mesaMonitor, clientesMonitor);
-        Mesero mesero = new Mesero("Naransojo", 1, 1, mesaMonitor, comidasMonitor);
+        Mesero mesero = new Mesero("Naranjoso", 1, 1, mesaMonitor, comidasMonitor);
 
         // Vistas
         RecepcionistaView recepcionistaView = new RecepcionistaView(
                 Constants.POSITION_INITIAL_RECEPCIONISTA_X,
-                Constants.POSITION_INITIAL_RECEPCIONISTA_Y
+                Constants.POSITION_INITIAL_RECEPCIONISTA_Y,
+                mesaMonitor
         );
         ChefView chefView = new ChefView(
                 Constants.POSITION_INITIAL_CHEF_X,
@@ -42,11 +51,23 @@ public class ManagerController {
         ManagerController.setMesaView(mesaView);
 
 
-        //controllers
-        RecepcionistaController recepcionistaController = new RecepcionistaController(recepcionista,recepcionistaView,mesaMonitor,clientesMonitor);
+        // Sincronizar las mesas lógicas con el monitor
+        for (Mesa mesa : mesas) { // Iterar sobre la lista de mesas creada anteriormente
+            mesaMonitor.liberarMesa(mesa.getNumeroMesa());
+        }
+
+
+        // Controladores
+        RecepcionistaController recepcionistaController = new RecepcionistaController(
+                recepcionista,
+                recepcionistaView,
+                mesaMonitor,
+                clientesMonitor
+        );
         recepcionistaController.startAssigningGuests();
+
         // Crear e inicializar 10 comensales
-        for (int i = 1; i <= Constants.NUMERO_MESAS; i++) {
+        for (int i = 0; i < Constants.NUMERO_COMENSALES; i++) {
             // Crear el modelo del comensal
             Comensal comensal = new Comensal("Comensal" + i, i);
 

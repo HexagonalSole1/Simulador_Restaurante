@@ -19,7 +19,7 @@ public class RecepcionistaComponent extends Component {
 
     public int asignarMesa() {
         try {
-            return mesaMonitor.ocuparMesa(); // Ocupar una mesa
+            return mesaMonitor.ocuparMesa().getNumeroMesa(); // Ocupar una mesa
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return -1; // Indica que no se pudo asignar

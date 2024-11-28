@@ -3,8 +3,12 @@ package org.example.views;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.scene.paint.Color;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.monitores.MesaMonitor;
 import org.example.views.components.MesaComponent;
+
 
 public class MesaView {
     private Entity[] mesasEntities;

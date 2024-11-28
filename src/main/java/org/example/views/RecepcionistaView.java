@@ -2,15 +2,16 @@ package org.example.views;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.dsl.FXGL;
+import org.example.monitores.MesaMonitor;
 import org.example.views.components.RecepcionistaComponent;
 
-import static org.example.models.Restaurant.mesaMonitor;
+
 
 public class RecepcionistaView {
 
     private Entity recepcionista;
 
-    public RecepcionistaView(double startX, double startY) {
+    public RecepcionistaView(double startX, double startY, MesaMonitor mesaMonitor) {
         // Crear la entidad para el recepcionista
         this.recepcionista = FXGL.entityBuilder()
                 .at(startX, startY) // Ubicación inicial del recepcionista
