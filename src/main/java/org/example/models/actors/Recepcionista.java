@@ -6,16 +6,15 @@ import org.example.monitores.MesaMonitor;
 import org.example.utils.LoggerDepuracionFXGL;
 
 public class Recepcionista extends Persona {
-    private final MesaMonitor mesaMonitor; // Monitor para gestionar las mesas
-    private final ClientesMonitor clientesMonitor; // Monitor para gestionar la cola de clientes
+    private final MesaMonitor mesaMonitor;
+    private final ClientesMonitor clientesMonitor;
 
     public Recepcionista(String nombre, int id, MesaMonitor mesaMonitor, ClientesMonitor clientesMonitor) {
         super(nombre, id);
-        this.mesaMonitor = mesaMonitor; // Asocia el monitor de mesas
-        this.clientesMonitor = clientesMonitor; // Asocia el monitor de clientes
+        this.mesaMonitor = mesaMonitor;
+        this.clientesMonitor = clientesMonitor;
     }
 
-    // Método para atender clientes de la cola y asignarles mesa
     public void atenderClientes() {
         new Thread(() -> {
             try {
@@ -28,24 +27,19 @@ public class Recepcionista extends Persona {
                 }
             } catch (InterruptedException e) {
                 LoggerDepuracionFXGL.log("Recepcionista interrumpida: " + e.getMessage());
-                Thread.currentThread().interrupt(); // Restaurar estado de interrupción
+                Thread.currentThread().interrupt();
             }
-        }).start(); // Ejecutar en un hilo separado
+        }).start();
     }
 
-    // Método para asignar una mesa al comensal
     private void atenderComensal(Comensal comensal) throws InterruptedException {
-        realizarAccion();
+        LoggerDepuracionFXGL.log("Recepcionista " + getNombre() + ": Atendiendo al comensal " + comensal.getNombre());
 
-        int idMesa = mesaMonitor.ocuparMesa().getNumeroMesa(); // Asigna una mesa al comensal
+        int idMesa = mesaMonitor.ocuparMesa().getNumeroMesa();
         comensal.setMesaAsignada(idMesa);
         LoggerDepuracionFXGL.log("Recepcionista " + getNombre() + ": Mesa " + idMesa + " asignada al comensal " + comensal.getNombre());
 
-        // Simula tiempo para asignar la mesa
         Thread.sleep(1000);
-
-        // Notifica al comensal que tiene una mesa asignada
-        comensal.setMesaAsignada(idMesa);
     }
 
     @Override
@@ -53,3 +47,4 @@ public class Recepcionista extends Persona {
         LoggerDepuracionFXGL.log("Recepcionista " + nombre + " está verificando disponibilidad de mesas.");
     }
 }
+

@@ -18,7 +18,8 @@ public class ComidaView {
     }
 
     // Mover la comida hacia una posición destino (por ejemplo, la mesa)
-    public void moverHacia(double x, double y) {
+    public void moverHaciaCliente(double x, double y) {
+
         comidaEntity.translateTowards(new Point2D(x, y), 100); // Velocidad de movimiento
     }
 

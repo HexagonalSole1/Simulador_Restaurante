@@ -27,7 +27,7 @@ public class RecepcionistaComponent extends Component {
     }
 
     // Liberar una mesa (opcional)
-    public void liberarMesa(int idMesa) {
+   /* public void liberarMesa(int idMesa) {
         mesaMonitor.liberarMesa(idMesa);
-    }
+    }*/
 }

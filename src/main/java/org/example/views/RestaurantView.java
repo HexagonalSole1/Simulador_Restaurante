@@ -40,7 +40,7 @@ public class RestaurantView {
     public void meseroAtiende(int meseroIndex, double comensalX, double comensalY) {
         // Llamar a un mesero para que atienda a un comensal
         if (meseroIndex < meseros.size()) {
-            meseros.get(meseroIndex).atenderComensal(comensalX, comensalY);
+            meseros.get(meseroIndex).moverAMesa(comensalX, comensalY);
             System.out.println("Mesero " + meseroIndex + " atiende al comensal en la mesa.");
         } else {
             System.out.println("No hay mesero para atender.");
@@ -52,16 +52,5 @@ public class RestaurantView {
     }
 
     // Este método es donde puedes iniciar la simulación, agregando comensales y meseros
-    public void iniciarSimulacion() {
-        // Agregar meseros al restaurante
-        agregarMesero(new MeseroView(2, 1)); // Mesero 1 en la posición (2, 1)
-        agregarMesero(new MeseroView(4, 1)); // Mesero 2 en la posición (4, 1)
 
-        // Agregar comensales al restaurante
-        agregarComensal(50, 100, 300, 200);  // Comensal 1 en la posición (50, 100)
-        agregarComensal(150, 100, 350, 200); // Comensal 2 en la posición (150, 100)
-
-        // Simular que un mesero atiende a un comensal
-        meseroAtiende(0, 300, 200);  // El mesero 0 atiende al comensal en la mesa
-    }
 }

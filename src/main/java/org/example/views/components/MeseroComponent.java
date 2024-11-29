@@ -1,61 +1,59 @@
 package org.example.views.components;
 
+import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import javafx.geometry.Point2D;
+import javafx.util.Duration;
+import org.example.models.restaurant.Mesa;
+import org.example.monitores.MesaMonitor;
 import org.example.views.ComidaView;
+
+import javax.swing.*;
 
 
 public class MeseroComponent extends Component {
-    private double velocidad = 150; // Velocidad del mesero (píxeles por segundo)
-    private Point2D destino; // Posición hacia donde se dirige el mesero
-    private boolean ocupado = false; // Estado del mesero
-    public void entregarComida(ComidaView comidaView, double mesaX, double mesaY) {
-        System.out.println("Mesero lleva el ramen a la mesa...");
+    private Point2D destino; // Posición de la mesa o cliente asignado
+    private double velocidad = 120; // Velocidad del mesero
 
-        // Mover el ramen hacia la mesa
-        comidaView.moverHacia(mesaX, mesaY);
-
-        // Entregar el ramen
-        FXGL.runOnce(() -> {
-            System.out.println("Ramen entregado en la mesa.");
-            comidaView.entregar(); // Eliminar la comida de la escena
-        }, javafx.util.Duration.seconds(2)); // Tiempo de entrega simulado
-    }
-    // Método para atender a un comensal
-    public void atenderComensal(double x, double y) {
-        destino = new Point2D(x, y);
-        ocupado = true; // El mesero está ocupado
+    // Asignar destino para atender
+    public void moverAMesa(double mesaX, double mesaY) {
+        ComponentInputMap mesero = null;
+        JComponent component = mesero.getComponent();
+        if (component != null) {
+            System.out.println("Configurando destino del mesero hacia: (" + mesaX + ", " + mesaY + ")");
+            component.move((int) mesaX, (int) mesaY); // Configura el destino
+        } else {
+            System.err.println("No se encontró el componente MeseroComponent para el mesero.");
+        }
     }
 
-    public void regresarAPosicionInicial(double x, double y) {
-        destino = new Point2D(x, y);
-        ocupado = false; // El mesero está libre
+    public void moverAHacia(double x, double y) {
+        destino = new Point2D(x, y); // Asegúrate de que `destino` se configura
+        System.out.println("Destino configurado: " + destino); // Depuración
     }
-
 
 
 
     @Override
     public void onUpdate(double tpf) {
         if (destino != null) {
-            // Mover hacia el destino
-            entity.translateTowards(destino, velocidad * tpf);
+            System.out.println("Moviendo hacia destino: " + destino); // Depuración
+            entity.translateTowards(destino, velocidad * tpf); // Mover entidad hacia el destino
 
-            // Detenerse al llegar al destino
-            if (entity.getPosition().distance(destino) < 5) {
-                destino = null; // Reiniciar destino
-                if (ocupado) {
-                    System.out.println("Mesero llegó al comensal.");
-                } else {
-                    System.out.println("Mesero regresó a su posición inicial.");
-                }
+            // Verificar si se ha alcanzado el destino
+            if (entity.getPosition().distance(destino) < 5) { // Umbral de 5 píxeles
+                destino = null; // Resetear el destino
+                System.out.println("Mesero llegó al destino.");
             }
+        } else {
+            System.out.println("No hay destino configurado para el mesero.");
         }
     }
 
-    // Consultar si el mesero está ocupado
-    public boolean isOcupado() {
-        return ocupado;
+
+    public void regresarAPosicion(double x, double y) {
+        moverAHacia(2000, 100); // Usar la misma lógica para regresar a la posición inicial
     }
 }
+

@@ -1,6 +1,5 @@
 package org.example.config;
 
-
 import org.example.controllers.ManagerController;
 import org.example.views.RestaurantView;
 import org.example.views.entities.EntityManager;

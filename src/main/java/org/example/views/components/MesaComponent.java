@@ -1,6 +1,7 @@
 package org.example.views.components;
 
 import com.almasb.fxgl.entity.component.Component;
+import javafx.scene.paint.Color;
 
 public class MesaComponent extends Component {
     private int numeroMesa;

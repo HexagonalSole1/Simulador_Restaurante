@@ -32,9 +32,9 @@ public class RecepcionistaView {
     }
 
     // Método para liberar una mesa cuando el comensal se va
-    public void liberarMesa(int idMesa) {
+   /* public void liberarMesa(int idMesa) {
         recepcionista.getComponent(RecepcionistaComponent.class).liberarMesa(idMesa);
-    }
+    }*/
 
     public Entity getEntity() {
         return recepcionista;
