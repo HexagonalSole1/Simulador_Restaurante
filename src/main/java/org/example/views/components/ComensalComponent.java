@@ -12,6 +12,11 @@ public class ComensalComponent extends Component {
         destino = new Point2D(x, y);
     }
 
+    // Verificar si el comensal llegó al destino
+    public boolean estaEnDestino() {
+        return destino == null; // Si el destino es null, ya llegó
+    }
+
     @Override
     public void onUpdate(double tpf) {
         if (destino != null) {

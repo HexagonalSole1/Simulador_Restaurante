@@ -26,8 +26,10 @@ public class MesaView {
             // Calcular la posición de la mesa en una rejilla
             double x = xInicial + (i % columnas) * separacionX;
             double y = yInicial + (i / columnas) * separacionY; // División entera para cambiar de fila
+            mesaMonitor.encontrarMesaPorId(i).setPosX(x);
+            mesaMonitor.encontrarMesaPorId(i).setPosY(y);
+            crearView(i+1, x, y);
 
-            crearView(i + 1, x, y);
         }
     }
 

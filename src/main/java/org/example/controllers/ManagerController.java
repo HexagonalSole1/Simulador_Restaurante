@@ -1,6 +1,7 @@
 package org.example.controllers;
 
 import org.example.config.Constants;
+import org.example.models.actors.Chef;
 import org.example.models.actors.Comensal;
 import org.example.models.actors.Mesero;
 import org.example.models.actors.Recepcionista;
@@ -15,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerController {
-    private static MesaView mesaView; // Variable estática para compartir
     public static void initController() {
 
+        //conifguracion inicial de mesas
         List<Mesa> mesas = new ArrayList<>();
         for (int i = 0; i < Constants.NUMERO_MESAS; i++) { // 5 mesas de ejemplo
-            mesas.add(new Mesa(i, true, true, Math.random() * 100, Math.random() * 100));
+            mesas.add(new Mesa(i, true,false, true,false, null, null));
         }
+
         // Monitores
         ClientesMonitor clientesMonitor = new ClientesMonitor();
         MesaMonitor mesaMonitor = new MesaMonitor(mesas); // Número de mesas definido en Constants
@@ -29,7 +31,7 @@ public class ManagerController {
 
         // Modelos
         Recepcionista recepcionista = new Recepcionista("Laura", 1, mesaMonitor, clientesMonitor);
-        Mesero mesero = new Mesero("Naranjoso", 1, 1, mesaMonitor, comidasMonitor);
+        Chef chef = new Chef("Naranjoso",1,comidasMonitor,3);
 
         // Vistas
         RecepcionistaView recepcionistaView = new RecepcionistaView(
@@ -41,15 +43,13 @@ public class ManagerController {
                 Constants.POSITION_INITIAL_CHEF_X,
                 Constants.POSITION_INITIAL_CHEF_Y
         );
-        MeseroView meseroView = new MeseroView(
-                Constants.POSITION_INITIAL_MESERO_X,
-                Constants.POSITION_INITIAL_MESERO_Y
-        );
+
+        //Controlador
+        ChefController chefController = new ChefController(chef,chefView,comidasMonitor);
+
 
         // Crear vista de la mesa con los valores iniciales
         MesaView mesaView = new MesaView(mesaMonitor, Constants.POSITION_INITIAL_MESAS_X, Constants.POSITION_INITIAL_MESAS_Y);
-        ManagerController.setMesaView(mesaView);
-
 
         // Sincronizar las mesas lógicas con el monitor
         for (Mesa mesa : mesas) { // Iterar sobre la lista de mesas creada anteriormente
@@ -66,11 +66,27 @@ public class ManagerController {
         );
         recepcionistaController.startAssigningGuests();
 
-        // Crear e inicializar 10 comensales
+
+        for (int i = 0; i < Constants.NUMERO_MESEROS ; i++){
+            Mesero mesero = new Mesero(("mesero" + (i+1)), (i+1), mesaMonitor, comidasMonitor);
+            MeseroView meseroView = new MeseroView(
+                    Constants.POSITION_INITIAL_MESERO_X+ (i % 5) * 200,
+                    Constants.POSITION_INITIAL_MESERO_Y+ (i % 5) * 0
+            );
+            MeseroController meseroController = new MeseroController(
+                    mesero,
+                    meseroView,
+                    mesaMonitor
+            );
+        }
+
+
+
+
+        // Crear e inicializar x comensales
         for (int i = 0; i < Constants.NUMERO_COMENSALES; i++) {
             // Crear el modelo del comensal
-            Comensal comensal = new Comensal("Comensal" + i, i);
-
+            Comensal comensal = new Comensal("Comensal" + (i+1), (i+1));
             // Crear la vista para el comensal
             int posX = Constants.POSITION_INITIAL_COMENSAL_X + (i % 5) * 0; // Ajuste para distribuirlos horizontalmente
             int posY = Constants.POSITION_INITIAL_COMENSAL_Y + (i % 5) * 100;
@@ -80,6 +96,7 @@ public class ManagerController {
             ComensalController comensalController = ComensalController.builder()
                     .comensal(comensal)
                     .comensalView(comensalView)
+                    .mesaMonitor(mesaMonitor)
                     .build();
             comensal.addObserver(comensalController);
 
@@ -89,14 +106,11 @@ public class ManagerController {
             // (Opcional) Imprimir la creación
             System.out.println("Creado: " + comensal.getNombre() + " en posición (" + posX + ", " + posY + ")");
         }
+
+
+
     }
 
-    public static void setMesaView(MesaView mesaView) {
-        ManagerController.mesaView = mesaView;
-    }
 
-    public static MesaView getMesaView() {
-        return mesaView;
-    }
 
 }

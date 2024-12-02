@@ -19,14 +19,29 @@ public class ComensalView {
                 .buildAndAttach();
     }
 
-    public void moverAMesa(double mesaX, double mesaY) {
+    public boolean moverAMesa(double mesaX, double mesaY) {
         ComensalComponent component = comensal.getComponent(ComensalComponent.class);
         if (component != null) {
             component.moverAHaciaMesa(mesaX, mesaY); // Iniciar el movimiento
+
+            // Esperar hasta que el comensal llegue al destino
+            while (!component.estaEnDestino()) {
+                try {
+                    Thread.sleep(100); // Breve espera antes de verificar nuevamente
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.err.println("Movimiento interrumpido.");
+                    return false;
+                }
+            }
+
+            return true; // El comensal llegó al destino
         } else {
             System.err.println("No se encontró el componente ComensalComponent para el comensal.");
         }
+        return false;
     }
+
 
 
     public void salir() {

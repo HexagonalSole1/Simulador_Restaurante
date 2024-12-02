@@ -14,7 +14,9 @@ import lombok.Setter;
 public class Mesa {
     private int numeroMesa;
     private Boolean Disponibilidad;
+    private Boolean isAtendida;
     private Boolean isClean;
+    private Boolean isPresentComensal;
     private Double posX;
     private Double posY;
 }

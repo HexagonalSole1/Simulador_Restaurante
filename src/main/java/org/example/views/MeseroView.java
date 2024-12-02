@@ -16,12 +16,57 @@ public class MeseroView {
                 .buildAndAttach();
     }
 
-    public void atenderComensal(double comensalX, double comensalY) {
-        mesero.getComponent(MeseroComponent.class).atenderComensal(comensalX, comensalY);
+    public boolean atenderComensal(double comensalX, double comensalY) {
+        MeseroComponent meseroComponent = mesero.getComponent(MeseroComponent.class);
+        meseroComponent.atenderComensal(comensalX, comensalY);
+
+        // Esperar hasta que el mesero llegue al destino
+        while (!meseroComponent.haLlegadoAlDestino()) {
+            try {
+                Thread.sleep(100); // Espera 100 ms antes de verificar nuevamente
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Movimiento interrumpido.");
+                return false;
+            }
+        }
+
+        return true; // El mesero llegó al destino
     }
 
-    public void regresarAPosicion(double posX, double posY) {
-        mesero.getComponent(MeseroComponent.class).regresarAPosicionInicial(posX, posY);
+    public boolean llevarPedidoACocina(double cocinaX, double cocinaY) {
+        MeseroComponent meseroComponent = mesero.getComponent(MeseroComponent.class);
+        meseroComponent.llevarPedidoACocina(cocinaX, cocinaY);
+
+        // Esperar hasta que el mesero llegue al destino
+        while (!meseroComponent.haLlegadoAlDestino()) {
+            try {
+                Thread.sleep(100); // Espera 100 ms antes de verificar nuevamente
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Movimiento interrumpido.");
+                return false;
+            }
+        }
+
+        return true; // El mesero llegó al destino
+    }
+
+    public boolean regresarAPosicion(double posX, double posY) {
+        MeseroComponent meseroComponent = mesero.getComponent(MeseroComponent.class);
+        meseroComponent.regresarAPosicionInicial(posX, posY);
+        // Esperar hasta que el mesero llegue al destino
+        while (!meseroComponent.haLlegadoAlDestino()) {
+            try {
+                Thread.sleep(100); // Espera 100 ms antes de verificar nuevamente
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Movimiento interrumpido.");
+                return false;
+            }
+        }
+
+        return true; // El mesero llegó al destino
     }
 }
 

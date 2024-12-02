@@ -1,8 +1,10 @@
 package org.example.config;
 
 public class Constants {
-    public static final int NUMERO_COMENSALES = 10; // Usa nombres en mayúsculas para constantes
-    public static final int NUMERO_MESAS = 8; // Usa nombres en mayúsculas para constantes
+    public static final int NUMERO_COMENSALES = 4; // Usa nombres en mayúsculas para constantes
+    public static final int NUMERO_MESEROS = 2; // Usa nombres en mayúsculas para constantes
+
+    public static final int NUMERO_MESAS = 12; // Usa nombres en mayúsculas para constantes
     public static final int WINDOW_WIDTH = 2000; // Usa nombres en mayúsculas para constantes
     public static final int WINDOW_HEIGTH = 1000; // Usa nombres en mayúsculas para constantes
     public static final String CLIENT_CONSTANT = "client";

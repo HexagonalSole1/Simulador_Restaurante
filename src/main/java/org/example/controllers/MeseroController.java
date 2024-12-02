@@ -1,59 +1,63 @@
+
 package org.example.controllers;
 
 import org.example.config.Constants;
 import org.example.models.actors.Mesero;
+import org.example.models.restaurant.Mesa;
+import org.example.monitores.MesaMonitor;
+import org.example.utils.LoggerDepuracionFXGL;
 import org.example.views.MeseroView;
-
 public class MeseroController {
     private final Mesero mesero;
     private final MeseroView meseroView;
+    private final MesaMonitor mesaMonitor;
+    private volatile boolean running = true; // Bandera para controlar el bucle
 
-    private  ComensalController comensalController;
-
-    public MeseroController(Mesero mesero, MeseroView meseroView) {
+    public MeseroController(Mesero mesero, MeseroView meseroView, MesaMonitor mesaMonitor) {
         this.mesero = mesero;
         this.meseroView = meseroView;
-    }
+        this.mesaMonitor = mesaMonitor;
 
-    // Método para levantar un pedido en la mesa asignada
-    public void levantarPedido() {
         new Thread(() -> {
             try {
-                // Mueve al mesero a la mesa asignada
-                System.out.println("Mesero " + mesero.getNombre() + " se mueve hacia la mesa " + mesero.getMesaAsignada());
-
-
-                // Simula el tiempo para tomar el pedido
-                Thread.sleep(3000);
-
-                // Levanta el pedido usando el modelo del mesero
-                mesero.atenderPedido();
-                System.out.println("Mesero " + mesero.getNombre() + " ha levantado el pedido en la mesa " + mesero.getMesaAsignada());
+                atendCLient();
             } catch (InterruptedException e) {
-                System.err.println("Error mientras el mesero levantaba el pedido: " + e.getMessage());
-                Thread.currentThread().interrupt();
+                throw new RuntimeException(e);
             }
         }).start();
     }
 
-    // Método para limpiar la mesa asignada
-    public void limpiarMesa() {
-        new Thread(() -> {
-            try {
-                // Mueve al mesero a la mesa asignada
-                System.out.println("Mesero " + mesero.getNombre() + " se mueve hacia la mesa " + mesero.getMesaAsignada());
-                meseroView.atenderComensal(500,600);
 
-                // Simula el tiempo para limpiar la mesa
-                Thread.sleep(2000);
+    private void atendCLient() throws InterruptedException {
+        while (running) {
+            Mesa mesaDisponible = mesaMonitor.esperarMesaOcupada(); // Espera una mesa ocupada
+            Boolean isArrivedToComensal = meseroView.atenderComensal(mesaDisponible.getPosX(), mesaDisponible.getPosY());
 
-                // Limpia la mesa usando el modelo del mesero
-                mesero.limpiarMesa();
-                System.out.println("Mesero " + mesero.getNombre() + " ha limpiado la mesa " + mesero.getMesaAsignada());
-            } catch (InterruptedException e) {
-                System.err.println("Error mientras el mesero limpiaba la mesa: " + e.getMessage());
-                Thread.currentThread().interrupt();
+            if (isArrivedToComensal){
+                 meseroView.llevarPedidoACocina(Constants.POSITION_INITIAL_CHEF_X,Constants.POSITION_INITIAL_COMENSAL_Y);
+                 mesero.atenderPedido(mesaDisponible);
+
+                mesero.dejarPedidoListoEnMesa(mesaDisponible);
+                meseroView.atenderComensal(mesaDisponible.getPosX(), mesaDisponible.getPosY());
+                mesero.seEntregoComidaEnLaMesa(mesaDisponible);
+
+                 meseroView.regresarAPosicion(Constants.POSITION_INITIAL_MESERO_X,Constants.POSITION_INITIAL_CHEF_Y);
             }
-        }).start();
+            // Detener el hilo después de atender el pedido
+            System.out.println("Mesero ha terminado de atender al cliente.");
+            //detenerMesero(); // Sale del bucle
+        }
     }
+
+    public void detenerMesero() {
+        running = false; // Detener el bucle
+    }
+
+
+
+
+
+
+
+
 }

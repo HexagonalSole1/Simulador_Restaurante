@@ -50,12 +50,6 @@ public class Comensal extends Persona implements Runnable {
 
     @Override
     public void run() {
-        try {
-            realizarAccion();
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            LoggerDepuracionFXGL.log("Comensal " + nombre + " fue interrumpido.");
-        }
+
     }
 }
